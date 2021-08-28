@@ -16,10 +16,7 @@ import { commonStyles } from '../styles/mainStyles';
 
 import { actions } from '../store';
 import { connect } from 'react-redux';
-import {
-  placesSelector,
-  selectedSelector
-} from '../store/selectors/places';
+import { placesSelector, selectedSelector } from '../store/selectors/places';
 
 const { height, width } = Dimensions.get('window');
 
@@ -29,7 +26,6 @@ class Places extends Component {
     this.state = {
       current_places: null,
       selectedPlace: '',
-      selectedPlaceIndex: '',
     };
   }
 
@@ -37,8 +33,8 @@ class Places extends Component {
     try {
       if (!this.props.places.length) {
         this.props.refreshPlaces();
-        if(this.props.places.length){
-          this.setState({current_places: this.props.places});
+        if (this.props.places.length) {
+          this.setState({ current_places: this.props.places });
         }
       }
       // console.log(this.props.places);
@@ -48,8 +44,9 @@ class Places extends Component {
   }
   componentDidUpdate() {
     if (this.props.places && this.state.current_places !== this.props.places) {
-      this.setState({current_places: this.props.places});
+      this.setState({ current_places: this.props.places });
     }
+    console.log(this.state);
   }
 
   renderPost = ({ item, index }) => {
@@ -63,20 +60,20 @@ class Places extends Component {
     );
   };
 
-  changeTab = tabName => {
-    const {selectedPlace} = this.state;
-    
-      if (selectedPlace !== '') {
-        this.props.navigation.navigate(tabName);
-      }
+  changeTab = (tabName) => {
+    const { selectedPlace } = this.state;
+
+    if (selectedPlace !== '') {
+      this.props.navigation.navigate(tabName);
+    }
   };
-  // _delete = () => {
-  //   const { selectedPlace } = this.state;
-  //   if (selectedPlace !== '') {
-  //     let index = selectedPlaceIndex;
-  //     this.props.removePost({ selectedPlace, index });
-  //   }
-  // };
+
+  _delete = () => {
+    const { selectedPlace } = this.state;
+    if (selectedPlace) {
+      this.props.deletePlace(selectedPlace._id);
+    }
+  };
 
   render() {
     const { current_places } = this.state;
@@ -99,12 +96,12 @@ class Places extends Component {
               style={styles.button}>
               <Text style={styles.buttonText}>Editar</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity onPress={() => this._delete()} style={styles.button}>
               <Text style={styles.buttonText}>Eliminar</Text>
             </TouchableOpacity>
           </View>
           {this.state.current_places === null ? (
-            <Text >... Cargando ...</Text>
+            <Text>... Cargando ...</Text>
           ) : (
             <FlatList
               data={current_places}
@@ -187,7 +184,9 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = (dispatch) => ({
   refreshPlaces: () => dispatch(actions.places.refreshPlaces()),
-  selectPlace: (placeSelected) => dispatch(actions.places.selectPlace(placeSelected)),
+  selectPlace: (placeSelected) =>
+    dispatch(actions.places.selectPlace(placeSelected)),
+  deletePlace: (id) => dispatch(actions.places.deletePlaceAction(id)),
 });
 const mapStateToProps = (state) => ({
   places: placesSelector(state),

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -7,69 +7,122 @@ import {
   TouchableOpacity,
   Dimensions,
   View,
+  KeyboardAvoidingView
 } from 'react-native';
 import { actions } from '../store';
 import { connect } from 'react-redux';
-import {
-  placesSelector,
-  selectedSelector
-} from '../store/selectors/places';
+import { placesSelector, selectedSelector } from '../store/selectors/places';
 
-import {commonStyles} from '../styles/mainStyles';
+import { commonStyles } from '../styles/mainStyles';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
+const onlyLettersRexp = new RegExp('[^A-Z ]', 'gi');
 
 class PlaceCreate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {
-        title: '',
-        body: '',
-      },
+      data: undefined,
     };
   }
 
+  componentDidUpdate() {
+    console.log(this.state);
+  }
+
+  onTextChange = (input) => {
+    if (input.regExp && input.value.match(input.regExp)) return;
+
+    let { data } = this.state;
+    if (!data) data = {};
+    data[input.field] = input.value;
+    this.setState({ data });
+  };
+
   render() {
-    const {data} = this.state;
+    const { data } = this.state;
     return (
       <SafeAreaView style={commonStyles.container}>
-        <View style={commonStyles.views}>
-          <Text
-            style={{...commonStyles.title, color: '#FFF', fontWeight: 'bold'}}>
-            New Post
+        <KeyboardAvoidingView style={commonStyles.views} behavior="padding">
+          <Text style={{ ...commonStyles.title, color: '#FFF', fontWeight: 'bold' }}>
+            Nuevo Lugar de Vacunación
           </Text>
           <View style={styles.inputBox}>
-            <Text style={styles.titleText}>Title:</Text>
-            <TextInput
-              style={styles.input}
-              value={data.title}
-              multiline={true}
-              onChangeText={input =>
-                this.setState({data: {...data, title: input}})
-              }
-            />
-          </View>
-          <View style={styles.inputBox}>
-            <Text style={styles.titleText}>Body: </Text>
-            <TextInput
-              style={styles.input}
-              value={data.body}
-              multiline={true}
-              onChangeText={input =>
-                this.setState({data: {...data, body: input}})
-              }
-            />
+            <View>
+              <Text style={styles.titleText}>Nombre:</Text>
+              <TextInput
+                style={styles.input}
+                value={data && data.name ? data.name : ''}
+                multiline={true}
+                onChangeText={(input) =>
+                  this.onTextChange({
+                    value: input,
+                    field: 'name',
+                    regExp: onlyLettersRexp,
+                  })
+                }
+              />
+            </View>
+            <View>
+              <Text style={styles.titleText}>Dirección:</Text>
+              <TextInput
+                style={styles.input}
+                value={data && data.address ? data.address : ''}
+                multiline={true}
+                onChangeText={(input) =>
+                  this.onTextChange({
+                    value: input,
+                    field: 'address',
+                    regExp: onlyLettersRexp,
+                  })
+                }
+              />
+            </View>
+            <View>
+              <Text style={styles.titleText}>Posición en el mapa:</Text>
+              <View>
+                <Text style={styles.titleText}>Latitud:</Text>
+                <TextInput
+                  style={styles.input}
+                  value={data && data.latitude ? data.latitude : ''}
+                  onChangeText={(input) =>
+                    this.onTextChange({ value: input, field: 'latitude' })
+                  }
+                />
+                <Text style={styles.titleText}>Longitud:</Text>
+                <TextInput
+                  style={styles.input}
+                  value={data && data.longitude ? data.longitude : ''}
+                  onChangeText={(input) =>
+                    this.onTextChange({ value: input, field: 'longitude' })
+                  }
+                />
+              </View>
+            </View>
+            <View>
+              <Text style={styles.titleText}>Imagen de portada:</Text>
+              <TextInput
+                style={styles.input}
+                value={data && data.url ? data.url : ''}
+                multiline={true}
+                onChangeText={(input) =>
+                  this.onTextChange({
+                    value: input,
+                    field: 'url',
+                  })
+                }
+              />
+            </View>
           </View>
           <TouchableOpacity
             style={commonStyles.primaryBtn}
             onPress={() => {
-              this.props.createPost(data);
-              this.props.navigation.navigate('Posts');
+              this.props.postPlace(data);
+              this.props.navigation.navigate('Lugares de Vacunacion');
             }}>
             <Text style={commonStyles.primaryBtnText}>Save Changes</Text>
           </TouchableOpacity>
-        </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     );
   }
@@ -94,10 +147,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => ({
-  createPost: data => dispatch(actions.posts.createPost(data)),
+const mapDispatchToProps = (dispatch) => ({
+  postPlace: (data) => dispatch(actions.places.postPlaceAction(data)),
 });
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   places: placesSelector(state),
   selected: selectedSelector(state),
 });

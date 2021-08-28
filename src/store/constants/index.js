@@ -1,3 +1,12 @@
 //Action types
 export const REFRESH_PLACES = 'REFRESH_PLACES';
 export const SELECT_PLACE = 'SELECT_PLACE';
+export const POST_PLACE = 'POST_PLACE';
+export const POST_PLACE_OK = 'POST_PLACE_OK';
+export const POST_PLACE_ERROR = 'POST_PLACE_ERROR';
+export const PATCH_PLACE = 'PATCH_PLACE';
+export const PATCH_PLACE_OK = 'PATCH_PLACE_OK';
+export const PATCH_PLACE_ERROR = 'PATCH_PLACE_ERROR';
+export const DELETE_PLACE = 'DELETE_PLACE';
+export const DELETE_PLACE_OK = 'DELETE_PLACE_OK';
+export const DELETE_PLACE_ERROR = 'DELETE_PLACE_ERROR';
