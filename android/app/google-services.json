@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "9949671647",
+    "project_id": "vacunaciones-react-native",
+    "storage_bucket": "vacunaciones-react-native.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9949671647:android:920acb4a89dff0f92b396a",
+        "android_client_info": {
+          "package_name": "com.vacunaciones"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9949671647-4adhqhu4pt5nj0ttlcfivgvq9ub59jgk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vacunaciones",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "9949671647-1o4vb8snrcqikvvv7hkho45m44hon1sv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJi-QGCg3R8tsDdjDctu0oQnQGDRv6_LA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9949671647-1o4vb8snrcqikvvv7hkho45m44hon1sv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

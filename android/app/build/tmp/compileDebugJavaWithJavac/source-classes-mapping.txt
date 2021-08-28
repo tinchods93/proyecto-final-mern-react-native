@@ -1,0 +1,14 @@
+com/vacunaciones/BuildConfig.java
+ com.vacunaciones.BuildConfig
+com/pilartectoapp/MainApplication.java
+ com.vacunaciones.MainApplication
+ com.vacunaciones.MainApplication$1
+com/pilartectoapp/MainActivity.java
+ com.vacunaciones.MainActivity
+com/facebook/react/PackageList.java
+ com.facebook.react.PackageList
+com/pilartectoapp/ReactNativeFlipper.java
+ com.vacunaciones.ReactNativeFlipper
+ com.vacunaciones.ReactNativeFlipper$1
+ com.vacunaciones.ReactNativeFlipper$2
+ com.vacunaciones.ReactNativeFlipper$2$1
