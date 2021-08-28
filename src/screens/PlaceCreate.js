@@ -8,14 +8,18 @@ import {
   Dimensions,
   View,
 } from 'react-native';
-import {actions} from '../store';
-import {connect} from 'react-redux';
+import { actions } from '../store';
+import { connect } from 'react-redux';
+import {
+  placesSelector,
+  selectedSelector
+} from '../store/selectors/places';
 
 import {commonStyles} from '../styles/mainStyles';
 
 const {height, width} = Dimensions.get('window');
 
-class PostCreate extends Component {
+class PlaceCreate extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -94,6 +98,7 @@ const mapDispatchToProps = dispatch => ({
   createPost: data => dispatch(actions.posts.createPost(data)),
 });
 const mapStateToProps = state => ({
-  posts: state.posts.posts,
+  places: placesSelector(state),
+  selected: selectedSelector(state),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(PostCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceCreate);

@@ -63,6 +63,13 @@ class Places extends Component {
     );
   };
 
+  changeTab = tabName => {
+    const {selectedPlace} = this.state;
+    
+      if (selectedPlace !== '') {
+        this.props.navigation.navigate(tabName);
+      }
+  };
   // _delete = () => {
   //   const { selectedPlace } = this.state;
   //   if (selectedPlace !== '') {
@@ -78,7 +85,7 @@ class Places extends Component {
         <View style={commonStyles.views}>
           <View style={styles.buttonBar}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('PostCreate')}
+              onPress={() => this.props.navigation.navigate('Nuevo Lugar')}
               style={styles.button}>
               <Text style={styles.buttonText}>Nuevo</Text>
             </TouchableOpacity>
