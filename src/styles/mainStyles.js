@@ -5,14 +5,14 @@ const {height, width} = Dimensions.get('window');
 
 export const commonStyles = StyleSheet.create({
   container: {
+    fontFamily:"Montserrat",
     flex: 1,
   },
   views: {
     alignItems: 'center',
     flexDirection: 'column',
-    height,
     backgroundColor: '#64778A',
-    width,
+    flex:1,
     justifyContent: 'center',
   },
   title: {margin: 10, fontSize: 25},
@@ -35,4 +35,26 @@ export const commonStyles = StyleSheet.create({
   },
   height: height,
   width: width,
+  homeButton: {
+    backgroundColor: '#F7F8F9',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.39,
+    shadowRadius: 8.3,
+    elevation: 10,
+    height: height / 8,
+    width: "80%",
+    borderRadius: 10,
+    justifyContent: 'center',
+    marginVertical:10
+  },
+  homeButtonText: {
+    color: '#343A40',
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
 });

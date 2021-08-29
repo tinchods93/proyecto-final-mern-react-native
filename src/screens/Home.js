@@ -29,17 +29,17 @@ export default class Home extends Component {
           <View style={commonStyles.views}>
             <View style={{flexDirection: 'row'}}>
               <TouchableOpacity
-                style={styles.homeButton}
+                style={commonStyles.homeButton}
                 onPress={() => this.props.navigation.navigate('Profile')}>
-                <Text style={styles.homeButtonText}>Turnos</Text>
+                <Text style={commonStyles.homeButtonText}>Turnos</Text>
               </TouchableOpacity>
             </View>
 
             <View style={{flexDirection: 'row'}}>
               <TouchableOpacity
-                style={styles.homeButton}
+                style={commonStyles.homeButton}
                 onPress={() => this.props.navigation.navigate('Lugares')}>
-                <Text style={styles.homeButtonText}>Lugares de Vacunación</Text>
+                <Text style={commonStyles.homeButtonText}>Lugares de Vacunación</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -48,29 +48,3 @@ export default class Home extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  homeButton: {
-    backgroundColor: '#F7F8F9',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.39,
-    shadowRadius: 8.3,
-
-    elevation: 10,
-    height: height / 8,
-    width: width / 3,
-    borderRadius: 10,
-    justifyContent: 'center',
-    margin: 10,
-  },
-  homeButtonText: {
-    color: '#343A40',
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-});
