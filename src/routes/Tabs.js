@@ -3,6 +3,7 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import {HomeStackScreen} from './HomeStack';
 import {MapStackScreen} from './MapStack';
 import {PlacesStackScreen} from './PlacesStack';
+import { AppointmentsStackScreen } from './AppointmentsStack';
 import {Icon} from 'react-native-elements';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -32,6 +33,20 @@ export const Tabs = () => {
       <Tab.Screen
         name="Lugares"
         component={PlacesStackScreen}
+        options={{
+          tabBarIcon: ({color}) => (
+            <Icon
+              name={'map-marked-alt'}
+              type="font-awesome-5"
+              size={20}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Turnos"
+        component={AppointmentsStackScreen}
         options={{
           tabBarIcon: ({color}) => (
             <Icon

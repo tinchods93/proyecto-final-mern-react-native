@@ -54,7 +54,10 @@ class Places extends Component {
       <Place
         title={item.name}
         key={item._id}
-        onPress={() => this.setState({ selectedPlace: item })}
+        onPress={() => {
+          this.setState({ selectedPlace: item });
+          this.props.selectPlace(item);
+        }}
         selected={item._id === this.state.selectedPlace._id}
       />
     );
@@ -87,12 +90,12 @@ class Places extends Component {
               <Text style={styles.buttonText}>Nuevo</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.changeTab('PostDetail')}
+              onPress={() => this.changeTab('Lugar Detalles')}
               style={styles.button}>
               <Text style={styles.buttonText}>Detalles</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.changeTab('PostEdit')}
+              onPress={() => this.changeTab('Editar Lugar')}
               style={styles.button}>
               <Text style={styles.buttonText}>Editar</Text>
             </TouchableOpacity>
@@ -101,12 +104,20 @@ class Places extends Component {
             </TouchableOpacity>
           </View>
           {this.state.current_places === null ? (
-            <Text>... Cargando ...</Text>
+            <View style={{flex:1}}>
+              <TouchableOpacity
+              style={styles.item}>
+              <Text style={styles.title}>
+                Cargando
+              </Text>
+            </TouchableOpacity>
+            </View>  
           ) : (
             <FlatList
               data={current_places}
               renderItem={this.renderPost}
               keyExtractor={(item) => item._id}
+              style={styles.flatlist}
             />
           )}
         </View>
@@ -128,7 +139,6 @@ const Place = ({ title, onPress, selected }) => {
 const styles = StyleSheet.create({
   buttonBar: {
     flexDirection: 'row',
-    width,
     justifyContent: 'center',
     padding: 10,
   },
@@ -136,33 +146,37 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flex: 1,
     backgroundColor: '#E9ECEF',
+    height: 40,
     margin: 5,
     padding: 5,
     borderRadius: 10,
   },
   buttonText: {
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 18,
     color: '#343A40',
     fontWeight: 'bold',
+  },
+  flatlist: {
+    flex: 1,
+    width: '60%',
   },
   item: {
     padding: 10,
     backgroundColor: '#FFF',
     borderRadius: 5,
     marginVertical: 5,
-    marginHorizontal: 10,
   },
   title: {
     fontWeight: 'bold',
-    marginBottom: 10,
-    fontSize: 15,
+    fontFamily:"Montserrat",
+    fontSize: 20,
     color: '#495057',
   },
   selectedTitle: {
     fontWeight: 'bold',
-    marginBottom: 10,
-    fontSize: 15,
+    textAlign:"center",
+    fontSize: 20,
     color: '#0E0F10',
   },
   selectedItem: {
@@ -172,6 +186,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 6,
     },
+    width:"90%",
     shadowOpacity: 0.39,
     shadowRadius: 8.3,
     elevation: 10,

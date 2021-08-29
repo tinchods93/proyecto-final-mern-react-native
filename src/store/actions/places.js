@@ -1,5 +1,5 @@
 import { getPlaces, deletePlacesById, newPlace, updatePlace } from '../../api/index';
-import * as CONSTANTS from '../constants';
+import * as CONSTANTS from '../constants/places';
 
 //Actions Dispatchs
 export const selectPlace = (payload) => ({
@@ -88,8 +88,8 @@ export const patchPlaceAction = (data) => {
   return async (dispatch) => {
     dispatch(patchPlace());
     try {
+      console.log('DATA UPDATE=>', data);
       const updatedPlace = await updatePlace(data);
-      console.log('EN UPDATE PLACE');
       dispatch(patchPlaceOk(updatedPlace));
       dispatch(refreshPlaces());
     } catch (e) {
