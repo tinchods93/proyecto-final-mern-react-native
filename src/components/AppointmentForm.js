@@ -9,35 +9,28 @@ import {
   View,
   KeyboardAvoidingView,
 } from 'react-native';
+import DatePicker from 'react-native-date-picker';
+import moment from 'moment';
 import { actions } from '../store';
 import { connect } from 'react-redux';
-import { selectedSelector } from '../store/selectors/places';
+import { appointmentSelector } from '../store/selectors/appointments';
 import { commonStyles } from '../styles/mainStyles';
 
 const { height, width } = Dimensions.get('window');
-const onlyLettersRexp = new RegExp('^\D+$', 'gi');
+const onlyLettersRexp = new RegExp('^D+$', 'gi');
 
 class AppointmentForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: undefined,
-      formType: props.title || 'Nuevo Lugar de Vacunación',
+      data: {
+        born_date: new Date(),
+      }
     };
   }
-
-  componentDidMount() {
-    const { formType } = this.state;
-    const { title, selected } = this.props;
-
-    if (title && formType !== title) this.setState({ formType: title });
-    if (selected && formType !== 'Nuevo Lugar de Vacunación') {
-      this.setState({ data: selected });
-    }
-  }
+  
 
   onTextChange = (input) => {
-    if (input.regExp && input.value.match(input.regExp)) return;
     let { data } = this.state;
     if (!data) data = {};
     data[input.field] = input.value;
@@ -45,75 +38,81 @@ class AppointmentForm extends Component {
   };
 
   render() {
-    const { data, formType } = this.state;
-    const { title } = this.props;
+    const { data,today} = this.state;
     return (
       <KeyboardAvoidingView style={commonStyles.views} behavior='padding'>
-        <Text style={{ ...commonStyles.title, color: '#FFF', fontWeight: 'bold' }}>
-          {title}
-        </Text>
-        <View style={styles.inputBox}>
-          <View>
-            <Text style={styles.titleText}>Nombre:</Text>
+        <View style={commonStyles.myCard}>
+          <View style={commonStyles.myCard__title_container}>
+            <Text style={commonStyles.myCard__title}>Nuevo Turno</Text>
+          </View>
+          <View style={commonStyles.form__group}>
+            <Text style={commonStyles.labelStyle}>Nombre:</Text>
             <TextInput
-              style={styles.input}
+              style={commonStyles.input}
               value={data && data.name ? data.name : ''}
               multiline={true}
               onChangeText={(input) =>
                 this.onTextChange({
                   value: input,
                   field: 'name',
-                  
                 })
               }
             />
           </View>
-          <View>
-            <Text style={styles.titleText}>Dirección:</Text>
+          <View style={commonStyles.form__group}>
+            <Text style={commonStyles.labelStyle}>Apellido:</Text>
             <TextInput
-              style={styles.input}
+              style={commonStyles.input}
+              value={data && data.last_name ? data.last_name : ''}
+              multiline={true}
+              onChangeText={(input) =>
+                this.onTextChange({
+                  value: input,
+                  field: 'last_name',
+                })
+              }
+            />
+          </View>
+          <View style={commonStyles.form__group}>
+            <Text style={commonStyles.labelStyle}>DNI:</Text>
+            <TextInput
+              style={commonStyles.input}
+              value={data && data.dni ? data.dni : ''}
+              multiline={true}
+              onChangeText={(input) =>
+                this.onTextChange({
+                  value: input,
+                  field: 'dni',
+                })
+              }
+            />
+          </View>
+          <View style={commonStyles.form__group}>
+            <Text style={commonStyles.labelStyle}>Dirección:</Text>
+            <TextInput
+              style={commonStyles.input}
               value={data && data.address ? data.address : ''}
               multiline={true}
               onChangeText={(input) =>
                 this.onTextChange({
                   value: input,
                   field: 'address',
-                  
                 })
               }
             />
           </View>
-          <View>
-            <Text style={styles.titleText}>Posición en el mapa:</Text>
-            <View>
-              <Text style={styles.titleText}>Latitud:</Text>
-              <TextInput
-                style={styles.input}
-                value={data && data.latitude ? `${data.latitude}` : ''}
-                onChangeText={(input) =>
-                  this.onTextChange({ value: input, field: 'latitude' })
-                }
-              />
-              <Text style={styles.titleText}>Longitud:</Text>
-              <TextInput
-                style={styles.input}
-                value={data && data.longitude ? `${data.longitude}` : ''}
-                onChangeText={(input) =>
-                  this.onTextChange({ value: input, field: 'longitude' })
-                }
-              />
-            </View>
-          </View>
-          <View>
-            <Text style={styles.titleText}>Imagen de portada:</Text>
-            <TextInput
-              style={styles.input}
-              value={data && data.url ? data.url : ''}
-              multiline={true}
-              onChangeText={(input) =>
+          <View >
+            <Text style={commonStyles.labelStyle}>Fecha de Nacimiento:</Text>
+            <DatePicker
+              date={data.born_date}
+              mode='date'
+              maximumDate={new Date(moment().subtract(12,'years').format("YYYY-MM-DD"))}
+              minimumDate={new Date(moment().subtract(100,'years').format("YYYY-MM-DD"))}
+
+              onDateChange={(input) =>
                 this.onTextChange({
                   value: input,
-                  field: 'url',
+                  field: 'born_date',
                 })
               }
             />
@@ -122,43 +121,22 @@ class AppointmentForm extends Component {
         <TouchableOpacity
           style={commonStyles.primaryBtn}
           onPress={() => {
-            formType === 'Nuevo Lugar de Vacunación'
-              ? this.props.postPlace(data)
-              : this.props.updatePlace(data);
-
+            this.props.postAppointment(data);
             this.props.navegation();
           }}>
-          <Text style={commonStyles.primaryBtnText}>Save Changes</Text>
+          <Text style={commonStyles.primaryBtnText}>Enviar</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  inputBox: {
-    backgroundColor: '#FFF',
-    width: width * 0.9,
-    marginVertical: 10,
-    overflow: 'hidden',
-    borderRadius: 10,
-    padding: 10,
-  },
-  input: {
-    backgroundColor: '#E3E6EA',
-    borderRadius: 10,
-  },
-  titleText: {
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-});
 
 const mapDispatchToProps = (dispatch) => ({
-  postPlace: (data) => dispatch(actions.places.postPlaceAction(data)),
-  updatePlace: (data) => dispatch(actions.places.patchPlaceAction(data)),
+  postAppointment: (data) =>
+    dispatch(actions.appointments.postAppointmentAction(data)),
 });
 const mapStateToProps = (state) => ({
-  selected: selectedSelector(state),
+  appointment: appointmentSelector(state),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(AppointmentForm);

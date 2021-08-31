@@ -1,0 +1,1 @@
+export const appointmentSelector = (state) => state.appointmentReducer.appointment;
