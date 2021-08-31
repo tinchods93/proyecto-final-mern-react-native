@@ -8,6 +8,7 @@ import {
   Linking,
   Platform,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import { capitalize } from '../helpers/capitalizer';
 import { commonStyles } from '../styles/mainStyles';
@@ -35,7 +36,7 @@ const PlaceDetail = (props) => {
     const position = `${selectedPlace.latitude},${selectedPlace.longitude}`;
     const label = selectedPlace.name;
     const url = `${scheme}${position}?q=${label}`;
-    console.log("URL=>",url);
+    console.log('URL=>', url);
     Linking.openURL(url);
   };
 
@@ -43,9 +44,16 @@ const PlaceDetail = (props) => {
     <SafeAreaView style={commonStyles.container}>
       <View style={commonStyles.views}>
         <View style={styles.post}>
-          <TouchableOpacity onPress={() => linkToMap()}>
-            <Text>Abrir Mapa</Text>
-          </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '100%',
+              justifyContent: 'flex-end',
+            }}>
+            <TouchableOpacity onPress={() => linkToMap()}>
+              <Text style={styles.link}>Abrir Mapa</Text>
+            </TouchableOpacity>
+          </View>
           <Text style={styles.name}>{capitalize(selectedPlace.name)}</Text>
           <Text style={styles.address}>{capitalize(selectedPlace.address)}</Text>
           <Image style={styles.portraitImage} source={{ uri: selectedPlace.url }} />
@@ -71,8 +79,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 185,
     borderRadius: 10,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
     marginTop: 10,
+  },
+  link: {
+    color: '#6B73E6',
+    textDecorationLine: 'underline',
   },
 });
 

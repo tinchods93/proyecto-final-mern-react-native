@@ -1,4 +1,4 @@
-import { getPlaces, deletePlacesById, newPlace, updatePlace } from '../../api/index';
+import { getPlaces, deletePlacesById, newPlace, updatePlace } from '../../api/places';
 import * as CONSTANTS from '../constants/places';
 
 //Actions Dispatchs

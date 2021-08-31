@@ -10,7 +10,7 @@ const PlacesStack = createStackNavigator();
 export const PlacesStackScreen = () => {
   return (
     <PlacesStack.Navigator>
-      <PlacesStack.Screen name='Lugares de Vacunacion' component={Places} />
+      <PlacesStack.Screen name='Lugares de Vacunación' component={Places} />
       <PlacesStack.Screen name='Nuevo Lugar' component={PlaceCreate} />
       <PlacesStack.Screen name='Lugar Detalles' component={PlaceDetail} />
       <PlacesStack.Screen name='Editar Lugar' component={PlaceEdit} />

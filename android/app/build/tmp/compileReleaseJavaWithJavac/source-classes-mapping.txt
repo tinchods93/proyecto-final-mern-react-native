@@ -1,0 +1,9 @@
+com/vacunaciones/BuildConfig.java
+ com.vacunaciones.BuildConfig
+com/pilartectoapp/MainApplication.java
+ com.vacunaciones.MainApplication
+ com.vacunaciones.MainApplication$1
+com/pilartectoapp/MainActivity.java
+ com.vacunaciones.MainActivity
+com/facebook/react/PackageList.java
+ com.facebook.react.PackageList

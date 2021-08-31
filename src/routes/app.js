@@ -1,13 +1,12 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Tabs} from './Tabs';
-import {useDispatch, useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
 
 const AppStack = props => {
   return (
-    <Stack.Navigator headerMode="none">
+    <Stack.Navigator screenOptions={{headerShown:false}}>
       <Stack.Screen name="AppStack" component={Tabs} />
     </Stack.Navigator>
   );
