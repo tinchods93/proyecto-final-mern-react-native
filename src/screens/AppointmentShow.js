@@ -10,6 +10,7 @@ import {
   Image,
   Alert,
   Linking,
+  ScrollView
 } from 'react-native';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -60,74 +61,78 @@ class Appointment extends Component {
     console.log('appointment=>', appointment);
     return (
       <SafeAreaView style={commonStyles.container}>
-        <View style={commonStyles.views}>
-          {appointment && appointment.place_id ? (
-            <View style={styles.container}>
-              <View style={styles.personalData__card}>
-                <Text style={styles.title}>DATOS PERSONALES</Text>
-                <View style={styles.form__group}>
-                  <Text style={styles.label}>Nombre:</Text>
-                  <Text
-                    style={
-                      styles.information
-                    }>{`${appointment.user_id.name} ${appointment.user_id.last_name}`}</Text>
-                </View>
-                <View style={styles.form__group}>
-                  <Text style={styles.label}>DNI:</Text>
-                  <Text style={styles.information}>{appointment.user_id.dni}</Text>
-                </View>
-                <View style={styles.form__group}>
-                  <Text style={styles.label}>Fecha de nacimiento:</Text>
-                  <Text>
-                    {moment(appointment.user_id.born_date.split('T')[0]).format(
-                      'DD-MM-YYYY'
-                    )}
-                  </Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={styles.label}>Dirección:</Text>
-                  <Text style={styles.information}>
-                    {appointment.user_id.address}
-                  </Text>
-                </View>
-                <Text style={styles.title}>DATOS DEL TURNO</Text>
-                <View style={styles.form__group}>
-                  <Text style={styles.label}>Fecha de vacunación:</Text>
-                  <Text>
-                    {moment(appointment.date.split('T')[0]).format('DD-MM-YYYY')}
-                  </Text>
-                </View>
-                <View style={styles.form__group}>
-                  <Text style={styles.label}>Lugar de Vacunación:</Text>
-                  <Text style={styles.information}>{appointment.place_id.name}</Text>
-                </View>
-                <View style={styles.form__group}>
-                  <Text style={styles.label}>Dirección:</Text>
-                  <Text style={styles.information}>
-                    {appointment.place_id.address}
-                  </Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={styles.label}>{'Link al mapa ====>'}</Text>
-                  <TouchableOpacity onPress={() => this.linkToMap()}>
-                    <Text style={styles.link}>Abrir Mapa</Text>
-                  </TouchableOpacity>
-                </View>
-                <Text style={styles.title}>IMAGEN DEL FRENTE</Text>
-                <View style={{ flexDirection: 'row' }}>
-                  <Image
-                    style={styles.portraitImage}
-                    source={{ uri: appointment.place_id.url }}
-                  />
+        <ScrollView>
+          <View style={commonStyles.views}>
+            {appointment && appointment.place_id ? (
+              <View style={styles.container}>
+                <View style={styles.personalData__card}>
+                  <Text style={styles.title}>DATOS PERSONALES</Text>
+                  <View style={styles.form__group}>
+                    <Text style={styles.label}>Nombre:</Text>
+                    <Text
+                      style={
+                        styles.information
+                      }>{`${appointment.user_id.name} ${appointment.user_id.last_name}`}</Text>
+                  </View>
+                  <View style={styles.form__group}>
+                    <Text style={styles.label}>DNI:</Text>
+                    <Text style={styles.information}>{appointment.user_id.dni}</Text>
+                  </View>
+                  <View style={styles.form__group}>
+                    <Text style={styles.label}>Fecha de nacimiento:</Text>
+                    <Text>
+                      {moment(appointment.user_id.born_date.split('T')[0]).format(
+                        'DD-MM-YYYY'
+                      )}
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={styles.label}>Dirección:</Text>
+                    <Text style={styles.information}>
+                      {appointment.user_id.address}
+                    </Text>
+                  </View>
+                  <Text style={styles.title}>DATOS DEL TURNO</Text>
+                  <View style={styles.form__group}>
+                    <Text style={styles.label}>Fecha de vacunación:</Text>
+                    <Text>
+                      {moment(appointment.date.split('T')[0]).format('DD-MM-YYYY')}
+                    </Text>
+                  </View>
+                  <View style={styles.form__group}>
+                    <Text style={styles.label}>Lugar de Vacunación:</Text>
+                    <Text style={styles.information}>
+                      {appointment.place_id.name}
+                    </Text>
+                  </View>
+                  <View style={styles.form__group}>
+                    <Text style={styles.label}>Dirección:</Text>
+                    <Text style={styles.information}>
+                      {appointment.place_id.address}
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={styles.label}>{'Link al mapa ====>'}</Text>
+                    <TouchableOpacity onPress={() => this.linkToMap()}>
+                      <Text style={styles.link}>Abrir Mapa</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={styles.title}>IMAGEN DEL FRENTE</Text>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Image
+                      style={styles.portraitImage}
+                      source={{ uri: appointment.place_id.url }}
+                    />
+                  </View>
                 </View>
               </View>
-            </View>
-          ) : (
-            <View>
-              <Text>CARGANDO</Text>
-            </View>
-          )}
-        </View>
+            ) : (
+              <View>
+                <Text>CARGANDO</Text>
+              </View>
+            )}
+          </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }
@@ -142,10 +147,10 @@ const styles = StyleSheet.create({
   },
   form__group: {
     flexDirection: 'row',
-    borderColor: "#ADF0C8",
+    borderColor: '#ADF0C8',
     borderBottomWidth: 1,
     borderStyle: 'dotted',
-    borderRadius: 1
+    borderRadius: 1,
   },
   container: {
     padding: 10,

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   View,
+  ScrollView,
   KeyboardAvoidingView,
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
@@ -25,10 +26,9 @@ class AppointmentForm extends Component {
     this.state = {
       data: {
         born_date: new Date(),
-      }
+      },
     };
   }
-  
 
   onTextChange = (input) => {
     let { data } = this.state;
@@ -38,99 +38,103 @@ class AppointmentForm extends Component {
   };
 
   render() {
-    const { data,today} = this.state;
+    const { data, today } = this.state;
     return (
-      <KeyboardAvoidingView style={commonStyles.views} behavior='padding'>
-        <View style={commonStyles.myCard}>
-          <View style={commonStyles.myCard__title_container}>
-            <Text style={commonStyles.myCard__title}>Nuevo Turno</Text>
+      <ScrollView>
+        <KeyboardAvoidingView style={commonStyles.views} behavior='padding'>
+          <View style={commonStyles.myCard}>
+            <View style={commonStyles.myCard__title_container}>
+              <Text style={commonStyles.myCard__title}>Nuevo Turno</Text>
+            </View>
+            <View style={commonStyles.form__group}>
+              <Text style={commonStyles.labelStyle}>Nombre:</Text>
+              <TextInput
+                style={commonStyles.input}
+                value={data && data.name ? data.name : ''}
+                multiline={true}
+                onChangeText={(input) =>
+                  this.onTextChange({
+                    value: input,
+                    field: 'name',
+                  })
+                }
+              />
+            </View>
+            <View style={commonStyles.form__group}>
+              <Text style={commonStyles.labelStyle}>Apellido:</Text>
+              <TextInput
+                style={commonStyles.input}
+                value={data && data.last_name ? data.last_name : ''}
+                multiline={true}
+                onChangeText={(input) =>
+                  this.onTextChange({
+                    value: input,
+                    field: 'last_name',
+                  })
+                }
+              />
+            </View>
+            <View style={commonStyles.form__group}>
+              <Text style={commonStyles.labelStyle}>DNI:</Text>
+              <TextInput
+                style={commonStyles.input}
+                value={data && data.dni ? data.dni : ''}
+                multiline={true}
+                onChangeText={(input) =>
+                  this.onTextChange({
+                    value: input,
+                    field: 'dni',
+                  })
+                }
+              />
+            </View>
+            <View style={commonStyles.form__group}>
+              <Text style={commonStyles.labelStyle}>Dirección:</Text>
+              <TextInput
+                style={commonStyles.input}
+                value={data && data.address ? data.address : ''}
+                multiline={true}
+                onChangeText={(input) =>
+                  this.onTextChange({
+                    value: input,
+                    field: 'address',
+                  })
+                }
+              />
+            </View>
+            <View>
+              <Text style={commonStyles.labelStyle}>Fecha de Nacimiento:</Text>
+              <DatePicker
+                date={data.born_date}
+                mode='date'
+                maximumDate={
+                  new Date(moment().subtract(12, 'years').format('YYYY-MM-DD'))
+                }
+                minimumDate={
+                  new Date(moment().subtract(100, 'years').format('YYYY-MM-DD'))
+                }
+                onDateChange={(input) =>
+                  this.onTextChange({
+                    value: input,
+                    field: 'born_date',
+                  })
+                }
+              />
+            </View>
           </View>
-          <View style={commonStyles.form__group}>
-            <Text style={commonStyles.labelStyle}>Nombre:</Text>
-            <TextInput
-              style={commonStyles.input}
-              value={data && data.name ? data.name : ''}
-              multiline={true}
-              onChangeText={(input) =>
-                this.onTextChange({
-                  value: input,
-                  field: 'name',
-                })
-              }
-            />
-          </View>
-          <View style={commonStyles.form__group}>
-            <Text style={commonStyles.labelStyle}>Apellido:</Text>
-            <TextInput
-              style={commonStyles.input}
-              value={data && data.last_name ? data.last_name : ''}
-              multiline={true}
-              onChangeText={(input) =>
-                this.onTextChange({
-                  value: input,
-                  field: 'last_name',
-                })
-              }
-            />
-          </View>
-          <View style={commonStyles.form__group}>
-            <Text style={commonStyles.labelStyle}>DNI:</Text>
-            <TextInput
-              style={commonStyles.input}
-              value={data && data.dni ? data.dni : ''}
-              multiline={true}
-              onChangeText={(input) =>
-                this.onTextChange({
-                  value: input,
-                  field: 'dni',
-                })
-              }
-            />
-          </View>
-          <View style={commonStyles.form__group}>
-            <Text style={commonStyles.labelStyle}>Dirección:</Text>
-            <TextInput
-              style={commonStyles.input}
-              value={data && data.address ? data.address : ''}
-              multiline={true}
-              onChangeText={(input) =>
-                this.onTextChange({
-                  value: input,
-                  field: 'address',
-                })
-              }
-            />
-          </View>
-          <View >
-            <Text style={commonStyles.labelStyle}>Fecha de Nacimiento:</Text>
-            <DatePicker
-              date={data.born_date}
-              mode='date'
-              maximumDate={new Date(moment().subtract(12,'years').format("YYYY-MM-DD"))}
-              minimumDate={new Date(moment().subtract(100,'years').format("YYYY-MM-DD"))}
-
-              onDateChange={(input) =>
-                this.onTextChange({
-                  value: input,
-                  field: 'born_date',
-                })
-              }
-            />
-          </View>
-        </View>
-        <TouchableOpacity
-          style={commonStyles.primaryBtn}
-          onPress={() => {
-            this.props.postAppointment(data);
-            this.props.navegation();
-          }}>
-          <Text style={commonStyles.primaryBtnText}>Enviar</Text>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
+          <TouchableOpacity
+            style={commonStyles.primaryBtn}
+            onPress={() => {
+              this.props.postAppointment(data);
+              this.props.navegation();
+            }}>
+            <Text style={commonStyles.primaryBtnText}>Enviar</Text>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </ScrollView>
     );
   }
 }
-
 
 const mapDispatchToProps = (dispatch) => ({
   postAppointment: (data) =>
